@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HomeImage from '@/../images/bg/bg-home-2.png';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 
 import { useNavigationStore } from '@/stores/usePublicNavigationStore';
@@ -53,7 +54,7 @@ const socials = [
                 <div class="relative h-44 w-full overflow-hidden">
                     <img
                         :src="HomeImage"
-                        alt="Energía sostenible"
+                        alt="Irina Sarmiento"
                         class="h-full w-full object-cover"
                     />
                     <div
@@ -119,7 +120,7 @@ const socials = [
                 <div
                     class="bg-orinoco-darker flex items-center justify-between px-5 py-4 text-xs text-gray-200"
                 >
-                    <span>© {{ currentYear }} E.C Orinoco S.A.S.</span>
+                    <span>© {{ currentYear }} Irina Sarmiento Guerra</span>
                     <div class="flex space-x-3">
                         <a
                             v-for="icon in socials"

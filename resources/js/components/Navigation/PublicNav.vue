@@ -2,8 +2,7 @@
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import { useNavigationStore } from '@/stores/usePublicNavigationStore';
 import { Link, usePage } from '@inertiajs/vue3';
-import { computed, ref, onMounted } from 'vue';
-import { Moon, Sun } from 'lucide-vue-next';
+import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps({ scrolled: Boolean });
 const navigation = useNavigationStore();
@@ -26,7 +25,9 @@ const breadcrumb = computed(() => {
     parts.forEach((part) => {
         path += `/${part}`;
         crumbs.push({
-            name: part.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
+            name: part
+                .replace(/-/g, ' ')
+                .replace(/\b\w/g, (l) => l.toUpperCase()),
             href: path,
         });
     });
@@ -59,11 +60,27 @@ const toggleTheme = () => {
     document.documentElement.classList.toggle('dark', darkMode.value);
     localStorage.setItem('theme', darkMode.value ? 'dark' : 'light');
 };
+
+const routeLabels: Record<string, string> = {
+    home: 'Inicio',
+    about: 'Acerca de',
+    contact: 'Contacto',
+    academicproduction: 'Academia',
+};
+
+const getRouteText = (route: string) => {
+    console.log('Route:', route);
+    let value = route.toLowerCase().replace(/\s+/g, '');
+    console.log('Label:', routeLabels);
+    console.log('Value:', value);
+
+    return routeLabels[value] ?? 'Ruta desconocida';
+};
 </script>
 
 <template>
     <nav
-        class="header-banner bg-gradient-to-br px-4 py-2 text-white my-0"
+        class="header-banner my-0 bg-gradient-to-br px-4 py-2 text-white"
         :class="[
             'fixed top-0 z-50 w-full backdrop-blur-sm transition-all duration-300',
             scrolled || !isHome
@@ -73,7 +90,6 @@ const toggleTheme = () => {
     >
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
-
                 <!-- Logo -->
                 <AppLogoIcon
                     class="h-15 w-auto transition"
@@ -83,9 +99,7 @@ const toggleTheme = () => {
 
                 <!-- Desktop Navigation -->
                 <div class="hidden items-center space-x-4 md:flex">
-
                     <template v-for="link in navigation.links" :key="link.href">
-
                         <ul class="flex items-center gap-6">
                             <li class="group relative">
                                 <!-- LINK PRINCIPAL -->
@@ -117,7 +131,7 @@ const toggleTheme = () => {
                                     class="border-orinoco-border invisible absolute top-full left-0 z-50 mt-3 w-64 rounded-xl border bg-white opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100"
                                 >
                                     <li
-                                        v-for="(child) in link.children"
+                                        v-for="child in link.children"
                                         :key="child.href"
                                     >
                                         <Link
@@ -126,7 +140,7 @@ const toggleTheme = () => {
                                         >
                                             <component
                                                 :is="child.icon"
-                                                class="h-4 w-4 "
+                                                class="h-4 w-4"
                                             />
                                             {{ child.title }}
                                         </Link>
@@ -134,16 +148,16 @@ const toggleTheme = () => {
                                 </ul>
                             </li>
                         </ul>
-
                     </template>
-
-
 
                     <Link
                         :href="navigation.admin.href"
-                        class="flex items-center rounded-md bg-orinoco-accent px-3 py-1.5 text-sm font-medium text-orinoco-dark transition hover:bg-orinoco-dark hover:text-white dark:hover:bg-orinoco-accent dark:hover:text-orinoco-dark"
+                        class="flex items-center rounded-md bg-orinoco-accent px-3 py-1.5 text-sm font-medium text-orinoco-dark transition hover:bg-orinoco-primary hover:text-white dark:hover:bg-orinoco-accent dark:hover:text-orinoco-dark"
                     >
-                        <font-awesome-icon :icon="['fas', 'user-shield']" class="mr-1 text-sm" />
+                        <font-awesome-icon
+                            :icon="['fas', 'user-shield']"
+                            class="mr-1 text-sm"
+                        />
                         {{ navigation.admin.title }}
                     </Link>
 
@@ -158,20 +172,60 @@ const toggleTheme = () => {
                                                 class="h-5 w-5 text-gray-700 dark:text-gray-200"
                                             />
                                         </button>-->
-
                 </div>
 
-                <!-- Mobile -->
-                <div class="flex flex-col items-end space-y-1 md:hidden">
+                <!-- Mobile: Breadcrumb + Menu -->
+                <div class="flex items-center gap-3 md:hidden">
+                    <!-- Breadcrumb -->
+                    <ol
+                        v-if="breadcrumb.length > 1"
+                        class="flex max-w-[70vw] flex-wrap items-center gap-1 overflow-hidden text-sm text-gray-600 dark:text-gray-300"
+                    >
+                        <li
+                            v-for="(crumb, index) in breadcrumb"
+                            :key="crumb.href"
+                            class="flex items-center"
+                        >
+                            <Link
+                                v-if="index !== breadcrumb.length - 1"
+                                :href="crumb.href"
+                                class="font-medium text-orinoco-primary hover:underline"
+                            >
+                                {{ crumb.name }}
+                            </Link>
+
+                            <span
+                                v-else
+                                class="font-semibold text-gray-800 dark:text-gray-100"
+                            >
+                                {{ getRouteText(crumb.name) }}
+                            </span>
+
+                            <span
+                                v-if="index < breadcrumb.length - 1"
+                                class="mx-1 text-gray-400"
+                            >
+                                /
+                            </span>
+                        </li>
+                    </ol>
+
+                    <!-- Botón menú -->
                     <button
                         @click="navigation.toggleDrawer"
                         class="p-2 transition"
-                        :class="scrolled || !isHome ? 'text-gray-700 dark:text-gray-200' : 'text-white'"
+                        :class="
+                            scrolled || !isHome
+                                ? 'text-gray-700 dark:text-gray-200'
+                                : 'text-white'
+                        "
                     >
-                        <font-awesome-icon :icon="['fas', 'bars']" class="text-xl" />
+                        <font-awesome-icon
+                            :icon="['fas', 'bars']"
+                            class="text-xl"
+                        />
                     </button>
                 </div>
-
             </div>
         </div>
     </nav>
