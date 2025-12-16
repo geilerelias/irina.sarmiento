@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BgHome from '@/../images/bg/bg-home.png';
 import { usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
@@ -102,7 +103,7 @@ const breadcrumbs = computed(() => {
         <section class="relative overflow-hidden bg-orinoco-light py-14">
             <div class="absolute inset-0">
                 <img
-                    src="/images/academic/articles-hero.jpg"
+                    :src="BgHome"
                     alt="Documentos académicos"
                     class="h-full w-full object-cover opacity-10"
                 />
