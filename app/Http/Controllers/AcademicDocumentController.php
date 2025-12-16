@@ -173,7 +173,7 @@ class AcademicDocumentController extends Controller
                     'title' => $doc->title,
                     'description' => $doc->description,
                     'published_at' => $doc->published_at,
-                    'file_path' => asset('storage/'.$doc->file_path),
+                    'file_path' => asset('secure-pdf/'.$doc->file_path),
                     'file_type' => $isImage ? 'image' : ($isPdf ? 'pdf' : 'other'),
                 ];
             });

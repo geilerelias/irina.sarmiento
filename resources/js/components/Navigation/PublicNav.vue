@@ -8,8 +8,10 @@ const props = defineProps({ scrolled: Boolean });
 const navigation = useNavigationStore();
 const page = usePage();
 
-// Detecta ruta activa
-const isActive = (href: string) => page.url === href;
+// Detecta ruta activa incluyendo hijas
+const isActive = (href: string) => {
+    return page.url === href || page.url.startsWith(href + '/');
+};
 
 // Detecta si estás en la home
 const isHome = computed(() => page.url === '/');
@@ -74,7 +76,7 @@ const getRouteText = (route: string) => {
     console.log('Label:', routeLabels);
     console.log('Value:', value);
 
-    return routeLabels[value] ?? 'Ruta desconocida';
+    return routeLabels[value] ?? route;
 };
 </script>
 

@@ -77,12 +77,29 @@ const closeModal = () => {
     isModalOpen.value = false;
     activeDocument.value = null;
 };
+
+const breadcrumbs = computed(() => {
+    const segments = page.url.split('?')[0].split('/').filter(Boolean);
+
+    let path = '';
+
+    return segments.map((segment) => {
+        path += `/${segment}`;
+
+        return {
+            label: segment
+                .replace(/-/g, ' ')
+                .replace(/\b\w/g, (l) => l.toUpperCase()),
+            href: path,
+        };
+    });
+});
 </script>
 
 <template>
     <GuestLayout>
         <!-- HERO -->
-        <section class="relative overflow-hidden bg-orinoco-light py-24">
+        <section class="relative overflow-hidden bg-orinoco-light py-14">
             <div class="absolute inset-0">
                 <img
                     src="/images/academic/articles-hero.jpg"
@@ -91,22 +108,62 @@ const closeModal = () => {
                 />
             </div>
 
-            <div class="relative mx-auto max-w-7xl px-6 text-center">
-                <component
-                    :is="categoryIcon"
-                    class="mx-auto mb-6 h-14 w-14 text-orinoco-primary"
-                />
+            <div class="relative mx-auto max-w-7xl px-6">
+                <!-- Contenido principal -->
+                <div class="text-center">
+                    <component
+                        :is="categoryIcon"
+                        class="mx-auto mt-12 mb-6 h-14 w-14 text-orinoco-primary"
+                    />
 
-                <h1 class="text-orinoco-darker mb-4 text-4xl font-bold">
-                    {{ categoryTitle }}
-                </h1>
+                    <h1 class="text-orinoco-darker mb-4 text-4xl font-bold">
+                        {{ categoryTitle }}
+                    </h1>
 
-                <p
-                    v-if="categoryDescription"
-                    class="mx-auto max-w-3xl text-lg text-gray-700"
+                    <p
+                        v-if="categoryDescription"
+                        class="mx-auto max-w-3xl text-lg text-gray-700"
+                    >
+                        {{ categoryDescription }}
+                    </p>
+                </div>
+
+                <!-- Breadcrumb abajo a la derecha -->
+                <nav
+                    aria-label="Breadcrumb"
+                    class="mt-10 flex justify-end text-sm text-gray-600"
                 >
-                    {{ categoryDescription }}
-                </p>
+                    <ol class="flex flex-wrap items-center gap-2">
+                        <li>
+                            <a href="/" class="hover:text-orinoco-primary">
+                                Inicio
+                            </a>
+                        </li>
+
+                        <li
+                            v-for="(crumb, index) in breadcrumbs"
+                            :key="crumb.href"
+                            class="flex items-center gap-2"
+                        >
+                            <span class="text-gray-400">/</span>
+
+                            <a
+                                v-if="index < breadcrumbs.length - 1"
+                                :href="crumb.href"
+                                class="hover:text-orinoco-primary"
+                            >
+                                {{ crumb.label }}
+                            </a>
+
+                            <span
+                                v-else
+                                class="text-orinoco-darker font-medium"
+                            >
+                                {{ crumb.label }}
+                            </span>
+                        </li>
+                    </ol>
+                </nav>
             </div>
         </section>
 
