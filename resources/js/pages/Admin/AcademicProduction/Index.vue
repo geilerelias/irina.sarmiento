@@ -118,20 +118,24 @@ const categoryText = computed(() => {
 
 <template>
     <AppLayout>
-        <div class="mx-auto max-w-6xl space-y-10 px-6 py-8">
+        <div class="mx-auto max-w-6xl space-y-10 px-4 py-6 md:px-6 md:py-8">
             <!-- HEADER -->
-            <div class="flex items-center justify-between">
+            <div
+                class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+            >
                 <div>
-                    <h1 class="text-3xl font-semibold text-orinoco-dark">
+                    <h1
+                        class="text-2xl font-semibold text-gray-800 md:text-3xl dark:text-gray-100"
+                    >
                         Producción Académica
                     </h1>
-                    <p class="text-orinoco-gray text-sm">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
                         Gestión de documentos — {{ categoryText }}
                     </p>
                 </div>
 
                 <span
-                    class="rounded-full bg-orinoco-accent/20 px-4 py-1 text-sm font-medium text-orinoco-accent capitalize"
+                    class="w-fit rounded-full bg-orinoco-primary/10 px-4 py-1 text-sm font-medium text-orinoco-primary dark:text-orinoco-light"
                 >
                     {{ categoryText }}
                 </span>
@@ -140,25 +144,29 @@ const categoryText = computed(() => {
             <!-- CREATE FORM -->
             <form
                 @submit.prevent="submit"
-                class="border-orinoco-border rounded-2xl border bg-white shadow-lg"
+                class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-orinoco-primary dark:bg-sidebar"
             >
-                <div class="gradient-orinoco h-1 w-full rounded-t-2xl"></div>
+                <div
+                    class="h-1 w-full bg-gradient-to-r from-orinoco-primary to-orinoco-light"
+                ></div>
 
-                <div class="space-y-6 p-8">
-                    <h2 class="text-xl font-semibold text-orinoco-dark">
+                <div class="space-y-6 p-6 md:p-8">
+                    <h2
+                        class="text-lg font-semibold text-gray-800 md:text-xl dark:text-gray-100"
+                    >
                         Nuevo documento
                     </h2>
 
                     <input
                         v-model="form.title"
-                        class="input"
+                        class="input dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                         placeholder="Título"
                         required
                     />
 
                     <textarea
                         v-model="form.description"
-                        class="input"
+                        class="input dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                         rows="3"
                         placeholder="Descripción"
                     />
@@ -166,10 +174,11 @@ const categoryText = computed(() => {
                     <input
                         type="date"
                         v-model="form.published_at"
-                        class="input"
+                        class="input dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                     />
+
                     <label
-                        class="border-orinoco-border flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 text-center transition hover:border-orinoco-primary hover:bg-orinoco-light"
+                        class="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 p-6 text-center transition hover:border-indigo-500 hover:bg-indigo-50 dark:border-gray-600 dark:hover:bg-gray-800"
                     >
                         <input
                             type="file"
@@ -184,7 +193,9 @@ const categoryText = computed(() => {
                             required
                         />
                         <span class="text-3xl">📄</span>
-                        <span class="mt-2 text-sm text-orinoco-dark">
+                        <span
+                            class="mt-2 text-sm text-gray-700 dark:text-gray-300"
+                        >
                             Subir PDF o imagen
                         </span>
                     </label>
@@ -201,12 +212,14 @@ const categoryText = computed(() => {
                 </div>
             </form>
 
-            <!-- TABLE -->
+            <!-- DESKTOP TABLE -->
             <div
-                class="border-orinoco-border overflow-hidden rounded-2xl border bg-white shadow-lg"
+                class="hidden overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg md:block dark:border-gray-700 dark:bg-sidebar"
             >
                 <table class="w-full text-sm">
-                    <thead class="bg-orinoco-light">
+                    <thead
+                        class="bg-gray-50 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
+                    >
                         <tr>
                             <th class="px-4 py-3 text-left">Título</th>
                             <th class="px-4 py-3 text-left">Fecha</th>
@@ -219,51 +232,51 @@ const categoryText = computed(() => {
                         <tr
                             v-for="doc in documents"
                             :key="doc.id"
-                            class="border-t hover:bg-orinoco-light/40"
+                            class="border-t border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
                         >
                             <td class="px-4 py-3">
-                                <p class="font-medium text-orinoco-dark">
+                                <p
+                                    class="font-medium text-gray-800 dark:text-gray-100"
+                                >
                                     {{ doc.title }}
                                 </p>
                                 <p
                                     v-if="doc.description"
-                                    class="text-orinoco-gray text-xs"
+                                    class="text-xs text-gray-500 dark:text-gray-400"
                                 >
                                     {{ doc.description }}
                                 </p>
                             </td>
 
-                            <td class="text-orinoco-gray px-4 py-3">
+                            <td
+                                class="px-4 py-3 text-gray-500 dark:text-gray-400"
+                            >
                                 {{ doc.published_at ?? '—' }}
                             </td>
 
                             <td class="px-4 py-3">
-                                <template v-if="isImage(doc.file_path)">
-                                    <img
-                                        :src="`/storage/${doc.file_path}`"
-                                        class="border-orinoco-border max-h-48 rounded-xl border"
-                                    />
-                                </template>
-
-                                <template v-else>
-                                    <PdfViewer
-                                        :src="`/secure-pdf/${doc.file_path}`"
-                                    />
-                                </template>
+                                <img
+                                    v-if="isImage(doc.file_path)"
+                                    :src="`/storage/${doc.file_path}`"
+                                    class="max-h-40 rounded-lg border dark:border-gray-700"
+                                />
+                                <PdfViewer
+                                    v-else
+                                    :src="`/secure-pdf/${doc.file_path}`"
+                                />
                             </td>
 
                             <td class="px-4 py-3 text-center">
                                 <div class="flex justify-center gap-2">
                                     <button
-                                        @click="openEdit(doc)"
                                         class="btn-secondary"
+                                        @click="openEdit(doc)"
                                     >
                                         Editar
                                     </button>
-
                                     <button
-                                        @click="destroy(doc)"
                                         class="btn-danger"
+                                        @click="destroy(doc)"
                                     >
                                         Eliminar
                                     </button>
@@ -274,7 +287,7 @@ const categoryText = computed(() => {
                         <tr v-if="documents.length === 0">
                             <td
                                 colspan="4"
-                                class="text-orinoco-gray px-4 py-8 text-center"
+                                class="px-4 py-8 text-center text-gray-500 dark:text-gray-400"
                             >
                                 No hay documentos registrados
                             </td>
@@ -283,35 +296,88 @@ const categoryText = computed(() => {
                 </table>
             </div>
 
+            <!-- MOBILE CARDS -->
+            <div class="space-y-4 md:hidden">
+                <div
+                    v-for="doc in documents"
+                    :key="doc.id"
+                    class="rounded-xl border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-900"
+                >
+                    <h3 class="font-semibold text-gray-800 dark:text-gray-100">
+                        {{ doc.title }}
+                    </h3>
+
+                    <p
+                        v-if="doc.description"
+                        class="mt-1 text-xs text-gray-500 dark:text-gray-400"
+                    >
+                        {{ doc.description }}
+                    </p>
+
+                    <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                        Fecha: {{ doc.published_at ?? '—' }}
+                    </p>
+
+                    <div class="mt-3">
+                        <img
+                            v-if="isImage(doc.file_path)"
+                            :src="`/storage/${doc.file_path}`"
+                            class="rounded-lg"
+                        />
+                        <PdfViewer
+                            v-else
+                            :src="`/secure-pdf/${doc.file_path}`"
+                        />
+                    </div>
+
+                    <div class="mt-4 flex gap-2">
+                        <button
+                            class="btn-secondary w-full"
+                            @click="openEdit(doc)"
+                        >
+                            Editar
+                        </button>
+                        <button class="btn-danger w-full" @click="destroy(doc)">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- EDIT MODAL -->
             <div
                 v-if="editing"
-                class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
             >
                 <div
-                    class="border-orinoco-border w-full max-w-lg rounded-2xl border bg-white shadow-xl"
+                    class="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-900"
                 >
-                    <div class="border-b px-6 py-4">
-                        <h3 class="text-lg font-semibold text-orinoco-dark">
+                    <div class="border-b px-6 py-4 dark:border-gray-700">
+                        <h3
+                            class="text-lg font-semibold text-gray-800 dark:text-gray-100"
+                        >
                             Editar documento
                         </h3>
                     </div>
 
                     <div class="space-y-4 px-6 py-6">
-                        <input v-model="editForm.title" class="input" />
+                        <input
+                            v-model="editForm.title"
+                            class="input dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
+                        />
                         <textarea
                             v-model="editForm.description"
-                            class="input"
+                            class="input dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                             rows="3"
                         />
                         <input
                             type="date"
                             v-model="editForm.published_at"
-                            class="input"
+                            class="input dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                         />
                         <input
                             type="file"
-                            class="input"
+                            class="input dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                             @change="
                                 (e) =>
                                     (editForm.file =
@@ -322,7 +388,7 @@ const categoryText = computed(() => {
                     </div>
 
                     <div
-                        class="flex justify-end gap-3 border-t bg-orinoco-light px-6 py-4"
+                        class="flex justify-end gap-3 border-t bg-gray-50 px-6 py-4 dark:border-gray-700 dark:bg-gray-800"
                     >
                         <button class="btn-secondary" @click="editing = null">
                             Cancelar

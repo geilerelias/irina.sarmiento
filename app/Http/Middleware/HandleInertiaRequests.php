@@ -41,14 +41,34 @@ class HandleInertiaRequests extends Middleware
             ->map(fn ($v, $i) => config($i === 0 ? 'app.quote_message' : 'app.quote_author') ?? trim($v))
             ->all();
 
+        $user = $request->user();
+
         return [
             ...parent::share($request),
+
             'name' => config('app.name'),
-            'quote' => ['message' => trim($message), 'author' => trim($author)],
-            'auth' => [
-                'user' => $request->user(),
+
+            'quote' => [
+                'message' => trim($message),
+                'author' => trim($author),
             ],
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+
+            'auth' => [
+                'user' => $user,
+
+                // 👇 PERMISOS (CLAVE)
+                'can' => [
+
+                    'manageAcademic' => $request->user()
+                        ? $request->user()->can('manage', \App\Models\AcademicDocument::class)
+                        : false,
+
+                    'manageUsers' => $request->user()?->isAdmin() ?? false,
+                ],
+            ],
+
+            'sidebarOpen' => ! $request->hasCookie('sidebar_state')
+                || $request->cookie('sidebar_state') === 'true',
         ];
     }
 }

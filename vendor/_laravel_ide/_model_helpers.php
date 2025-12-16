@@ -324,6 +324,7 @@ namespace App\Models {
     /**
      * App\Models\User
      *
+     * @property string $role
      * @property \Illuminate\Support\Carbon|null $two_factor_confirmed_at
      * @property string|null $two_factor_recovery_codes
      * @property string|null $two_factor_secret
@@ -348,6 +349,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereTwoFactorSecret($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereTwoFactorRecoveryCodes($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereTwoFactorConfirmedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereRole($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User query()

@@ -130,7 +130,7 @@ const getRouteText = (route: string) => {
                                 <!-- SUBMENÚ -->
                                 <ul
                                     v-if="link.children"
-                                    class="border-orinoco-border invisible absolute top-full left-0 z-50 mt-3 w-64 rounded-xl border bg-white opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100"
+                                    class="invisible absolute top-full left-1/2 z-50 mt-4 w-72 -translate-x-1/2 border border-gray-100 bg-white/95 opacity-0 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] backdrop-blur-lg transition-all duration-300 group-hover:visible group-hover:translate-y-1 group-hover:opacity-100"
                                 >
                                     <li
                                         v-for="child in link.children"
@@ -138,13 +138,30 @@ const getRouteText = (route: string) => {
                                     >
                                         <Link
                                             :href="child.href"
-                                            class="flex items-center gap-3 px-5 py-3 text-sm text-gray-700 transition hover:bg-orinoco-light hover:text-orinoco-primary"
+                                            :class="[
+                                                'relative flex items-center gap-3 px-5 py-3 text-sm transition',
+                                                isActive(child.href)
+                                                    ? 'bg-orinoco-light font-semibold text-orinoco-primary'
+                                                    : 'text-gray-700 hover:bg-orinoco-light hover:text-orinoco-primary',
+                                            ]"
                                         >
                                             <component
                                                 :is="child.icon"
                                                 class="h-4 w-4"
+                                                :class="
+                                                    isActive(child.href)
+                                                        ? 'text-orinoco-primary'
+                                                        : 'text-gray-400'
+                                                "
                                             />
+
                                             {{ child.title }}
+
+                                            <!-- Barra activa -->
+                                            <span
+                                                v-if="isActive(child.href)"
+                                                class="absolute top-0 left-0 h-full w-1 rounded-r bg-orinoco-primary"
+                                            ></span>
                                         </Link>
                                     </li>
                                 </ul>

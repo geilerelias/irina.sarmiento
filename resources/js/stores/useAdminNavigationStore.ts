@@ -1,6 +1,6 @@
 import { dashboard,contact } from '@/routes'
 import adminAcademicProduction  from '@/routes/admin/academic-production'
-
+import users from '@/routes/admin/users'
 import type { NavItem } from '@/types'
 import {
     LayoutGrid,
@@ -86,6 +86,11 @@ export const useAdminNavigationStore = defineStore('adminNavigation', {
                         icon: FileText,
                     },
                 ],
+            },
+            {
+                title: 'Usuarios',
+                href: users.index(),
+                icon: Users,
             },
 
         ] as NavItem[],

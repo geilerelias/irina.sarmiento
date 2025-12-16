@@ -22,6 +22,7 @@ class AcademicDocumentController extends Controller
     public function index(string $category)
     {
         $this->authorize('viewAny', AcademicDocument::class);
+
         $documents = AcademicDocument::query()
             ->where('category', $category)
             ->orderByDesc('created_at')
@@ -57,7 +58,7 @@ class AcademicDocumentController extends Controller
         return back();
     }
 
-    public function update(Request $request, string $category, AcademicDocument $document)
+    public function update(Request $request, AcademicDocument $document)
     {
         $this->authorize('update', $document);
 
