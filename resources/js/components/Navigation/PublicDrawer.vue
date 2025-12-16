@@ -15,7 +15,10 @@ const closeDrawer = () => navigation.closeDrawer();
 const currentYear = new Date().getFullYear();
 
 // Detectar enlace activo
-const isActive = (href: string) => page.url === href;
+const isActive = (href: string) => {
+    if (page.url === href) return true;
+    return page.url.startsWith(href + '/');
+};
 
 const socials = [
     {
@@ -79,25 +82,70 @@ const socials = [
                     >
                         Navegación
                     </h2>
-
                     <ul class="space-y-2">
-                        <li v-for="link in navigation.links" :key="link.href">
+                        <li
+                            v-for="link in navigation.links"
+                            :key="link.href"
+                            class="relative"
+                        >
+                            <!-- LINK PADRE -->
                             <Link
                                 :href="link.href"
                                 @click="closeDrawer"
                                 :class="[
-                                    'group relative flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium transition-all duration-200',
+                                    'group flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium transition-all duration-200',
                                     isActive(link.href)
                                         ? 'border-l-4 border-orinoco-primary bg-[#2F9E44]/10 text-orinoco-primary'
                                         : 'text-orinoco-dark hover:bg-[#2F9E44]/10 hover:text-orinoco-primary',
                                 ]"
                             >
-                                <span>{{ link.title }}</span>
+                                <div class="flex items-center gap-3">
+                                    <component
+                                        v-if="link.icon"
+                                        :is="link.icon"
+                                        class="h-4 w-4"
+                                    />
+                                    <span>{{ link.title }}</span>
+                                </div>
+
                                 <font-awesome-icon
-                                    :icon="['fas', 'angle-right']"
-                                    class="text-gray-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[#2F9E44]"
+                                    v-if="link.children"
+                                    :icon="['fas', 'angle-down']"
+                                    class="text-xs transition-transform duration-200"
+                                    :class="{
+                                        'rotate-180': isActive(link.href),
+                                    }"
                                 />
                             </Link>
+
+                            <!-- SUBMENÚ -->
+                            <ul
+                                v-if="link.children && isActive(link.href)"
+                                class="mt-1 space-y-1 pl-6"
+                            >
+                                <li
+                                    v-for="child in link.children"
+                                    :key="child.href"
+                                >
+                                    <Link
+                                        :href="child.href"
+                                        @click="closeDrawer"
+                                        :class="[
+                                            'flex items-center gap-3 rounded-md px-3 py-2 text-sm transition',
+                                            page.url === child.href
+                                                ? 'bg-orinoco-light font-medium text-orinoco-primary'
+                                                : 'text-gray-600 hover:bg-orinoco-light hover:text-orinoco-primary',
+                                        ]"
+                                    >
+                                        <component
+                                            v-if="child.icon"
+                                            :is="child.icon"
+                                            class="h-4 w-4"
+                                        />
+                                        {{ child.title }}
+                                    </Link>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
 
