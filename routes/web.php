@@ -86,3 +86,9 @@ Route::get('/test-mail', function () {
 
     return 'Correo enviado';
 });
+
+
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Enlace de storage creado correctamente';
+});
