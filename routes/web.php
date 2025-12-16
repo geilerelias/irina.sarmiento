@@ -4,6 +4,8 @@ use App\Http\Controllers\AcademicDocumentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
+use App\Http\Controllers\ContactController;
+
 
 Route::get('/welcome', function () {
     return Inertia::render('Welcome', [
@@ -23,33 +25,8 @@ Route::get('/about', function () {
     ]);
 })->name('about');
 
-/* Route::prefix('academic-production')
-    ->name('academic-production.')
-    ->group(function () {
 
-        $sharedProps = [
-            'canRegister' => Features::enabled(Features::registration()),
-        ];
-
-        Route::get('/', fn () => Inertia::render('AcademicProduction/Index', $sharedProps)
-        )->name('index');
-
-        Route::get('/articles', fn () => Inertia::render('AcademicProduction/ScientificArticles', $sharedProps)
-        )->name('articles');
-
-        Route::get('/research', fn () => Inertia::render('AcademicProduction/IndependentResearch', $sharedProps)
-        )->name('research');
-
-        Route::get('/thesis', fn () => Inertia::render('AcademicProduction/DoctoralThesis', $sharedProps)
-        )->name('thesis');
-
-        Route::get('/evaluations', fn () => Inertia::render('AcademicProduction/AcademicEvaluations', $sharedProps)
-        )->name('evaluations');
-
-        Route::get('/workshops', fn () => Inertia::render('AcademicProduction/AcademicWorkshops', $sharedProps)
-        )->name('workshops');
-
-    }); */
+Route::post('/contact', [ContactController::class, 'send']);
 
 // Ruta general de academia (sin categoría)
 Route::get('/academic-production', function () {
@@ -99,3 +76,13 @@ Route::get('example', function () {
 })->name('example');
 
 require __DIR__.'/settings.php';
+
+
+Route::get('/test-mail', function () {
+    Mail::raw('Correo de prueba', function ($msg) {
+        $msg->to('irina.sarmiento@wirelesslink.com.co')
+            ->subject('Test Laravel');
+    });
+
+    return 'Correo enviado';
+});

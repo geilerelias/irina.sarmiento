@@ -3,24 +3,7 @@ import HomeImage from '@/../images/bg/bg-cultural.jpg';
 import FormContactSection from '@/components/Sections/FormContactSection.vue';
 import NewsletterSection from '@/components/Sections/NewsletterSection.vue';
 import GuestLayout from '@/layouts/GuestLayout.vue';
-import { Mail } from 'lucide-vue-next';
-const socials = [
-    {
-        icon: ['fab', 'facebook-f'],
-        href: '#',
-        name: 'Facebook',
-    },
-    {
-        icon: ['fab', 'linkedin-in'],
-        href: '#',
-        name: 'LinkedIn',
-    },
-    {
-        icon: ['fab', 'instagram'],
-        href: '#',
-        name: 'Instagram',
-    },
-];
+import { GraduationCap, Mail, MapPin, School } from 'lucide-vue-next';
 
 const scrollToForm = () => {
     const formElement = document.querySelector('form');
@@ -87,14 +70,12 @@ const scrollToForm = () => {
                     </h3>
 
                     <div class="space-y-6">
+                        <!-- PERFIL -->
                         <div class="flex items-start">
                             <div
                                 class="mr-4 flex h-12 w-12 items-center justify-center rounded-lg bg-orinoco-primary"
                             >
-                                <font-awesome-icon
-                                    icon="fa-user-graduate"
-                                    class="text-xl text-white"
-                                />
+                                <GraduationCap class="h-6 w-6 text-white" />
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">
@@ -108,14 +89,12 @@ const scrollToForm = () => {
                             </div>
                         </div>
 
+                        <!-- INSTITUCIÓN -->
                         <div class="flex items-start">
                             <div
                                 class="mr-4 flex h-12 w-12 items-center justify-center rounded-lg bg-orinoco-primary"
                             >
-                                <font-awesome-icon
-                                    icon="fa-school"
-                                    class="text-xl text-white"
-                                />
+                                <School class="h-6 w-6 text-white" />
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">Institución</p>
@@ -127,14 +106,12 @@ const scrollToForm = () => {
                             </div>
                         </div>
 
+                        <!-- EMAIL -->
                         <div class="flex items-start">
                             <div
                                 class="mr-4 flex h-12 w-12 items-center justify-center rounded-lg bg-orinoco-primary"
                             >
-                                <font-awesome-icon
-                                    icon="fa-envelope"
-                                    class="text-xl text-white"
-                                />
+                                <Mail class="h-6 w-6 text-white" />
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">
@@ -143,19 +120,17 @@ const scrollToForm = () => {
                                 <p
                                     class="text-lg font-semibold text-orinoco-dark"
                                 >
-                                    informacion@dominioeducativo.com
+                                    irina.sarmiento@wirelesslink.com.co
                                 </p>
                             </div>
                         </div>
 
+                        <!-- UBICACIÓN -->
                         <div class="flex items-start">
                             <div
                                 class="mr-4 flex h-12 w-12 items-center justify-center rounded-lg bg-orinoco-primary"
                             >
-                                <font-awesome-icon
-                                    icon="fa-map-marker-alt"
-                                    class="text-xl text-white"
-                                />
+                                <MapPin class="h-6 w-6 text-white" />
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">Ubicación</p>
@@ -178,32 +153,6 @@ const scrollToForm = () => {
                         <p class="text-gray-700">
                             Atención académica y comunitaria previa solicitud.
                         </p>
-                    </div>
-
-                    <!-- REDES -->
-                    <div class="border-t border-gray-200 pt-6">
-                        <h4
-                            class="font-heading mb-4 text-lg font-semibold text-orinoco-dark"
-                        >
-                            Redes profesionales
-                        </h4>
-
-                        <div class="flex space-x-4">
-                            <a
-                                v-for="s in socials"
-                                :key="s.name"
-                                :href="s.href"
-                                target="_blank"
-                                rel="noopener"
-                                class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 transition-transform hover:-translate-y-1 hover:scale-110"
-                                :aria-label="s.name"
-                            >
-                                <font-awesome-icon
-                                    :icon="s.icon"
-                                    class="text-xl text-orinoco-primary"
-                                />
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>

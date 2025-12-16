@@ -306,10 +306,10 @@ import { BookOpen, GraduationCap } from 'lucide-vue-next';
                                 Correo Electrónico
                             </p>
                             <a
-                                href="mailto:irina.sarmiento@ecorinocosas.com"
+                                href="mailto:irina.sarmiento@wirelesslink.com.co"
                                 class="hover:text-orinoco-accent-light text-xl font-bold break-all transition sm:text-2xl"
                             >
-                                irina.sarmiento@ecorinocosas.com
+                                irina.sarmiento@wirelesslink.com.co
                             </a>
                         </div>
                     </div>

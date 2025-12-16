@@ -54,9 +54,7 @@ const socials = [
             <div>
                 <AppLogoIcon class="h-24 w-auto" :withLetter="true" />
                 <p class="text-orinoco-text-muted mt-1 text-sm leading-relaxed">
-                    <span class="">
-                        Irina Esther Sarmiento Guerra 
-                    </span >
+                    <span class=""> Irina Esther Sarmiento Guerra </span>
                     <br />
                     Docente · Magíster en Educación <br />
                     Psicóloga Social Comunitaria
@@ -137,13 +135,13 @@ const socials = [
                     <!-- Correo (abre app de correo) -->
                     <li class="group flex items-center space-x-2">
                         <a
-                            href="mailto:irinasarmiento@ecorinocosas.com"
+                            href="mailto:irina.sarmiento@wirelesslink.com.co"
                             class="flex items-center space-x-2 text-black transition-colors duration-300 hover:text-primary"
                         >
                             <Mail
                                 class="h-5 w-5 text-orinoco-accent transition-transform duration-300 group-hover:scale-110"
                             />
-                            <span>irinasarmiento@ecorinocosas.com</span>
+                            <span>irina.sarmiento@wirelesslink.com.co</span>
                         </a>
                     </li>
                 </ul>
