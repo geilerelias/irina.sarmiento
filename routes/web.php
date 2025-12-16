@@ -57,8 +57,7 @@ Route::prefix('admin/academic-production/{category}')
     });
 
 Route::get('/secure-pdf/{path}', [AcademicDocumentController::class, 'showPdf'])
-    ->where('path', '.*')
-    ->middleware('auth');
+    ->where('path', '.*');
 
 Route::get('/contact', function () {
     return Inertia::render('Contact', [
@@ -91,4 +90,21 @@ Route::get('/test-mail', function () {
 Route::get('/storage-link', function () {
     Artisan::call('storage:link');
     return 'Enlace de storage creado correctamente';
+});
+
+
+Route::get('/crear-enlace-storage', function () {
+
+    $origen  = storage_path('app/public');
+    $destino = public_path('../../irinasarmiento.wirelesslink.com.co/storage');
+
+    if (file_exists($destino)) {
+        return 'El enlace o carpeta ya existe';
+    }
+
+    if (symlink($origen, $destino)) {
+        return 'Enlace creado correctamente';
+    }
+
+    return 'El hosting no permite enlaces simbólicos';
 });

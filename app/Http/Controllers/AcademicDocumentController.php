@@ -84,7 +84,6 @@ class AcademicDocumentController extends Controller
 
     public function showPdf(string $path): BinaryFileResponse
     {
-        abort_unless(auth()->check(), 403);
 
         if (! Storage::disk('public')->exists($path)) {
             abort(404);
