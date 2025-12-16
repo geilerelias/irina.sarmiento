@@ -1,0 +1,185 @@
+<script setup lang="ts">
+import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import { useNavigationStore } from '@/stores/usePublicNavigationStore';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed, ref, onMounted } from 'vue';
+import { Moon, Sun } from 'lucide-vue-next';
+
+const props = defineProps({ scrolled: Boolean });
+const navigation = useNavigationStore();
+const page = usePage();
+
+// Detecta ruta activa
+const isActive = (href: string) => page.url === href;
+
+// Detecta si estás en la home
+const isHome = computed(() => page.url === '/');
+
+// Breadcrumb dinámico
+const breadcrumb = computed(() => {
+    const parts = page.url.split('/').filter(Boolean);
+    if (parts.length === 0) return [{ name: 'Inicio', href: '/' }];
+
+    const crumbs = [{ name: 'Inicio', href: '/' }];
+    let path = '';
+
+    parts.forEach((part) => {
+        path += `/${part}`;
+        crumbs.push({
+            name: part.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
+            href: path,
+        });
+    });
+
+    return crumbs;
+});
+
+// Clases de enlaces adaptadas a modo oscuro
+const navLinkClass = computed(() => {
+    const s = props.scrolled || !isHome.value;
+    return s
+        ? 'relative text-orinoco-primary hover:text-orinoco-accent dark:text-gray-200 dark:hover:text-white px-3 py-2 text-sm md:text-lg font-medium transition'
+        : 'relative text-white hover:text-green-200 dark:text-gray-100 dark:hover:text-gray-300 px-3 py-2 text-sm md:text-lg font-medium transition';
+});
+
+// Estado del tema
+const darkMode = ref(false);
+
+// Recuperar tema guardado
+onMounted(() => {
+    if (localStorage.getItem('theme') === 'dark') {
+        darkMode.value = true;
+        document.documentElement.classList.add('dark');
+    }
+});
+
+// Alternar tema + guardar preferencia
+const toggleTheme = () => {
+    darkMode.value = !darkMode.value;
+    document.documentElement.classList.toggle('dark', darkMode.value);
+    localStorage.setItem('theme', darkMode.value ? 'dark' : 'light');
+};
+</script>
+
+<template>
+    <nav
+        class="header-banner bg-gradient-to-br px-4 py-2 text-white my-0"
+        :class="[
+            'fixed top-0 z-50 w-full backdrop-blur-sm transition-all duration-300',
+            scrolled || !isHome
+                ? 'bg-white/95 shadow-lg dark:bg-gray-900/90 dark:text-gray-200'
+                : 'bg-transparent dark:bg-transparent',
+        ]"
+    >
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+
+                <!-- Logo -->
+                <AppLogoIcon
+                    class="h-15 w-auto transition"
+                    :withLetter="true"
+                    :white="!scrolled && isHome && !darkMode"
+                />
+
+                <!-- Desktop Navigation -->
+                <div class="hidden items-center space-x-4 md:flex">
+
+                    <template v-for="link in navigation.links" :key="link.href">
+
+                        <ul class="flex items-center gap-6">
+                            <li class="group relative">
+                                <!-- LINK PRINCIPAL -->
+                                <Link
+                                    :href="link.href"
+                                    :class="[navLinkClass, 'px-2 py-1 text-sm']"
+                                >
+                                    {{ link.title }}
+
+                                    <!-- Indicador activo -->
+                                    <div
+                                        v-if="isActive(link.href)"
+                                        class="absolute right-0 -bottom-[2px] left-0 flex justify-center gap-[2px]"
+                                    >
+                                        <span
+                                            class="block h-[2px] w-4 rounded bg-orinoco-primary"
+                                        ></span>
+                                        <span
+                                            class="block h-[2px] w-4 rounded bg-orinoco-blue"
+                                        ></span>
+                                        <span
+                                            class="block h-[2px] w-4 rounded bg-orinoco-accent"
+                                        ></span>
+                                    </div>
+                                </Link>
+                                <!-- SUBMENÚ -->
+                                <ul
+                                    v-if="link.children"
+                                    class="border-orinoco-border invisible absolute top-full left-0 z-50 mt-3 w-64 rounded-xl border bg-white opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100"
+                                >
+                                    <li
+                                        v-for="(child) in link.children"
+                                        :key="child.href"
+                                    >
+                                        <Link
+                                            :href="child.href"
+                                            class="flex items-center gap-3 px-5 py-3 text-sm text-gray-700 transition hover:bg-orinoco-light hover:text-orinoco-primary"
+                                        >
+                                            <component
+                                                :is="child.icon"
+                                                class="h-4 w-4 "
+                                            />
+                                            {{ child.title }}
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </template>
+
+
+
+                    <Link
+                        :href="navigation.admin.href"
+                        class="flex items-center rounded-md bg-orinoco-accent px-3 py-1.5 text-sm font-medium text-orinoco-dark transition hover:bg-orinoco-dark hover:text-white dark:hover:bg-orinoco-accent dark:hover:text-orinoco-dark"
+                    >
+                        <font-awesome-icon :icon="['fas', 'user-shield']" class="mr-1 text-sm" />
+                        {{ navigation.admin.title }}
+                    </Link>
+
+                    <!-- Botón de cambio de tema -->
+                    <!--                    <button
+                                            @click="toggleTheme"
+                                            class=" disabled rounded-md p-2 transition hover:bg-gray-200 dark:hover:bg-gray-800"
+                                            :title="darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+                                        >
+                                            <component
+                                                :is="darkMode ? Sun : Moon"
+                                                class="h-5 w-5 text-gray-700 dark:text-gray-200"
+                                            />
+                                        </button>-->
+
+                </div>
+
+                <!-- Mobile -->
+                <div class="flex flex-col items-end space-y-1 md:hidden">
+                    <button
+                        @click="navigation.toggleDrawer"
+                        class="p-2 transition"
+                        :class="scrolled || !isHome ? 'text-gray-700 dark:text-gray-200' : 'text-white'"
+                    >
+                        <font-awesome-icon :icon="['fas', 'bars']" class="text-xl" />
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+</template>
+
+<style scoped>
+.header-banner {
+    border-radius: 0 0 40px 40px;
+    width: 100%;
+}
+</style>

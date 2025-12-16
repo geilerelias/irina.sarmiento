@@ -1,0 +1,537 @@
+/* Importar fuentes personalizadas */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+/* Importar Tailwind */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/*Configuración del tema */
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-sans:
+        'Poppins', 'Montserrat', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar-background);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+
+    /* Colores principales - Inspirados en tonos cálidos y tierra */
+    --primary: #8b6f47;
+    /* Marrón tierra oscuro */
+    --primary-light: #c9a876;
+    /* Marrón claro */
+    --primary-dark: #6b5635;
+    /* Marrón más oscuro */
+
+    /* Secundarios */
+    --secondary: #a0826d;
+    /* Marrón suave */
+    --secondary-light: #d4af37;
+    /* Dorado brillante */
+    --secondary-dark: #7a6555;
+    /* Marrón profundo */
+
+    /* Colores claros y fondos */
+    --light: #f5ebe0;
+    /* Beige muy claro */
+    --light-darker: #e8d7cc;
+    /* Beige oscuro */
+    --white: #ffffff;
+    /* Blanco */
+    --gray: #c0c8d3;
+    /* Gris azulado claro (del fondo) */
+
+    /* Colores de acento */
+    --accent-gold: #d4af37;
+    /* Dorado cálido */
+    --accent-rose: #d4a5a5;
+    /* Rosa suave (de tonos de piel) */
+    --accent-bronze: #9b7653;
+    /* Bronce/cobre */
+
+    /* Colores oscuros */
+    --dark: #3d3d3d;
+    /* Gris oscuro */
+    --darker: #1a1a1a;
+    /* Negro suave */
+
+    /* Colores de estado */
+    --success: #8b9f7a;
+    /* Verde tierra */
+    --warning: #d4a574;
+    /* Naranja tierra */
+    --error: #c97777;
+    /* Rojo suave */
+    --info: #7a9fb3;
+    /* Azul suave */
+
+    /* Bordes y sombras */
+    --border: #d4cabc;
+    /* Beige para bordes */
+    --border-light: #e8d7cc;
+    /* Beige muy claro */
+    --shadow: rgba(0, 0, 0, 0.15);
+    /* Sombra sutil */
+
+    /* Aliases para compatibilidad */
+    --color-orinoco-primary: #8b6f47;
+    --color-orinoco-secondary: #a0826d;
+    --color-orinoco-dark: #3d3d3d;
+    --color-orinoco-accent: #d4af37;
+    --color-orinoco-blue: #7a9fb3;
+    --color-orinoco-light: #f5ebe0;
+
+    --orinoco-primary: #8b6f47;
+    --orinoco-primary-light: #c9a876;
+    --orinoco-primary-dark: #6b5635;
+
+    --orinoco-secondary: #a0826d;
+    --orinoco-secondary-light: #d4a5a5;
+    --orinoco-secondary-dark: #7a6555;
+
+    --orinoco-dark: #3d3d3d;
+    --orinoco-darker: #1a1a1a;
+    --orinoco-gray: #c0c8d3;
+
+    --orinoco-light: #f5ebe0;
+    --orinoco-white: #ffffff;
+
+    --orinoco-accent: #d4af37;
+    --orinoco-accent-light: #e8c547;
+    --orinoco-accent-dark: #b8941f;
+    --orinoco-blue: #7a9fb3;
+    --orinoco-blue-light: #9dbfd3;
+    --orinoco-blue-dark: #5a7f93;
+
+    --orinoco-rose: #d4a5a5;
+    --orinoco-bronze: #9b7653;
+
+    --orinoco-text: #3d3d3d;
+    --orinoco-text-light: #ffffff;
+    --orinoco-text-muted: #8b8b8b;
+
+    --orinoco-success: #8b9f7a;
+    --orinoco-warning: #d4a574;
+    --orinoco-error: #c97777;
+    --orinoco-info: #7a9fb3;
+
+    --orinoco-border: #d4cabc;
+    --orinoco-border-light: #e8d7cc;
+    --orinoco-shadow: rgba(0, 0, 0, 0.15);
+}
+
+.bg-orinoco-light {
+    background-color: #f8faf8;
+}
+
+.text-orinoco-dark {
+    color: #0d3b1d;
+}
+
+.font-montserrat {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.font-poppins {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 400 !important;
+}
+
+.text-orinoco-gray {
+    color: #6b7280;
+}
+
+.bg-orinoco-primary {
+    background-color: var(--orinoco-primary);
+}
+
+.gradient-orinoco {
+    background: linear-gradient(135deg,
+            var(--color-orinoco-dark),
+            var(--color-orinoco-primary));
+}
+
+
+/* =============================== INPUTS ================================ */
+.input {
+    @apply w-full rounded-lg border border-[var(--orinoco-border)] bg-[var(--orinoco-white)] px-4 py-2 text-[var(--orinoco-text)] transition focus:outline-none focus:border-[var(--orinoco-primary)] focus:ring-2 focus:ring-[var(--orinoco-primary)]/30 dark:border-[var(--orinoco-border)] dark:bg-[var(--orinoco-darker)] dark:text-[var(--orinoco-light)];
+}
+
+/* =============================== BOTÓN PRINCIPAL ================================ */
+.btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-[var(--orinoco-primary)] px-6 py-2 font-medium text-[var(--orinoco-text-light)] transition hover:bg-[var(--orinoco-primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--orinoco-primary)]/40 disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+/* =============================== BOTÓN SECUNDARIO ================================ */
+.btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-[var(--orinoco-border)] bg-[var(--orinoco-light)] px-4 py-2 font-medium text-[var(--orinoco-dark)] transition hover:bg-[var(--orinoco-border-light)] focus:outline-none focus:ring-2 focus:ring-[var(--orinoco-accent)]/30 dark:border-[var(--orinoco-border)] dark:bg-[var(--orinoco-dark)] dark:text-[var(--orinoco-light)];
+}
+
+/* =============================== BOTÓN PELIGRO / ELIMINAR ================================ */
+.btn-danger {
+    @apply inline-flex items-center justify-center rounded-lg bg-[var(--orinoco-error)] px-4 py-2 font-medium text-[var(--orinoco-text-light)] transition hover:bg-[var(--orinoco-error)]/90 focus:outline-none focus:ring-2 focus:ring-[var(--orinoco-error)]/40;
+}
+
+
+
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}
+
+@layer utilities {
+
+    body,
+    html {
+        --font-sans:
+            'Poppins', 'Montserrat', ui-sans-serif, system-ui, sans-serif,
+            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+            'Noto Color Emoji';
+    }
+
+    /* Utilidades para colores de E.C Orinoco */
+    .bg-orinoco-primary {
+        background-color: var(--orinoco-primary);
+    }
+
+    .border-orinoco-border {
+        border-color: var(--orinoco-border);
+    }
+
+    .bg-orinoco-border {
+        background-color: var(--orinoco-border);
+    }
+
+    .text-orinoco-border {
+        color: var(--orinoco-border);
+    }
+
+    .text-orinoco-primary {
+        color: var(--orinoco-primary);
+    }
+
+    .border-orinoco-primary {
+        border-color: var(--orinoco-primary);
+    }
+
+    .bg-orinoco-dark {
+        background-color: var(--orinoco-dark);
+    }
+
+    .text-orinoco-dark {
+        color: var(--orinoco-dark);
+    }
+
+    .border-orinoco-dark {
+        border-color: var(--orinoco-dark);
+    }
+
+    .bg-orinoco-darker {
+        background-color: var(--orinoco-darker);
+    }
+
+    .text-orinoco-darker {
+        color: var(--orinoco-darker);
+    }
+
+    .border-orinoco-darker {
+        border-color: var(--orinoco-darker);
+    }
+
+    .bg-orinoco-light {
+        background-color: var(--orinoco-light);
+    }
+
+    .text-orinoco-light {
+        color: var(--orinoco-light);
+    }
+
+    .border-orinoco-light {
+        border-color: var(--orinoco-light);
+    }
+
+    .bg-orinoco-accent {
+        background-color: var(--orinoco-accent);
+    }
+
+    .text-orinoco-accent {
+        color: var(--orinoco-accent);
+    }
+
+    .border-orinoco-accent {
+        border-color: var(--orinoco-accent);
+    }
+
+    .bg-orinoco-gray {
+        background-color: var(--orinoco-gray);
+    }
+
+    .text-orinoco-gray {
+        color: var(--orinoco-gray);
+    }
+
+    .border-orinoco-gray {
+        border-color: var(--orinoco-gray);
+    }
+
+    .bg-orinoco-blue {
+        background-color: var(--orinoco-blue);
+    }
+
+    .text-orinoco-blue {
+        color: var(--orinoco-blue);
+    }
+
+    .border-orinoco-blue {
+        border-color: var(--orinoco-blue);
+    }
+
+    /* Hover states para colores de E.C Orinoco */
+    .hover\:bg-orinoco-dark:hover {
+        background-color: var(--orinoco-dark);
+    }
+
+    .hover\:text-orinoco-primary:hover {
+        color: var(--orinoco-primary);
+    }
+
+    .hover\:border-orinoco-primary:hover {
+        border-color: var(--orinoco-primary);
+    }
+
+    .hover\:bg-orinoco-accent:hover {
+        background-color: var(--orinoco-accent);
+    }
+
+    .hover\:text-orinoco-accent:hover {
+        color: var(--orinoco-accent);
+    }
+
+    .hover\:border-orinoco-accent:hover {
+        border-color: var(--orinoco-accent);
+    }
+
+    /* Focus states para colores de E.C Orinoco */
+    .focus\:ring-orinoco-primary:focus {
+        --tw-ring-color: var(--orinoco-primary);
+    }
+
+    .focus\:border-orinoco-primary:focus {
+        border-color: var(--orinoco-primary);
+    }
+
+    .focus\:ring-orinoco-accent:focus {
+        --tw-ring-color: var(--orinoco-accent);
+    }
+
+    .focus\:border-orinoco-accent:focus {
+        border-color: var(--orinoco-accent);
+    }
+
+    /* Gradientes personalizados */
+    .gradient-orinoco {
+        background: linear-gradient(135deg, #8b6f47 0%, #c9a876 100%);
+    }
+
+    .gradient-energy {
+        background: linear-gradient(135deg, #c9a876 0%, #d4af37 100%);
+    }
+
+    .gradient-telecom {
+        background: linear-gradient(135deg, #7a9fb3 0%, #9dbfd3 100%);
+    }
+
+    .gradient-warm {
+        background: linear-gradient(135deg, #8b6f47 0%, #d4a5a5 100%);
+    }
+
+    .gradient-gold {
+        background: linear-gradient(135deg, #d4af37 0%, #e8c547 100%);
+    }
+
+    /* Animaciones personalizadas */
+    .hover-lift {
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
+    }
+
+    .slide-up-enter-active {
+        transition: all 0.3s ease-out;
+    }
+
+    .slide-up-enter-from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    .rotate-180 {
+        transform: rotate(180deg);
+    }
+}
+
+
+
+
+:root {
+    --background: #ffffff;
+    --foreground: #3d3d3d;
+    --card: #ffffff;
+    --card-foreground: #3d3d3d;
+    --popover: #ffffff;
+    --popover-foreground: #3d3d3d;
+    --primary: #8b6f47;
+    --primary-foreground: #ffffff;
+    --secondary: #e8d7cc;
+    --secondary-foreground: #3d3d3d;
+    --muted: #f5ebe0;
+    --muted-foreground: #8b8b8b;
+    --accent: #d4af37;
+    --accent-foreground: #3d3d3d;
+    --destructive: #c97777;
+    --destructive-foreground: #ffffff;
+    --border: #d4cabc;
+    --input: #e8d7cc;
+    --ring: #8b6f47;
+    --chart-1: #8b6f47;
+    --chart-2: #d4af37;
+    --chart-3: #7a9fb3;
+    --chart-4: #d4a5a5;
+    --chart-5: #9b7653;
+    --radius: 0.5rem;
+    --sidebar-background: #f5ebe0;
+    --sidebar-foreground: #3d3d3d;
+    --sidebar-primary: #8b6f47;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #e8d7cc;
+    --sidebar-accent-foreground: #3d3d3d;
+    --sidebar-border: #d4cabc;
+    --sidebar-ring: #8b6f47;
+    --sidebar: #f5ebe0;
+}
+
+.dark {
+    --background: #1a1a1a;
+    --foreground: #f5ebe0;
+    --card: #2d2d2d;
+    --card-foreground: #f5ebe0;
+    --popover: #2d2d2d;
+    --popover-foreground: #f5ebe0;
+    --primary: #d4af37;
+    --primary-foreground: #1a1a1a;
+    --secondary: #6b5635;
+    --secondary-foreground: #f5ebe0;
+    --muted: #3d3d3d;
+    --muted-foreground: #b0b0b0;
+    --accent: #e8c547;
+    --accent-foreground: #1a1a1a;
+    --destructive: #e89898;
+    --destructive-foreground: #1a1a1a;
+    --border: #3d3d3d;
+    --input: #2d2d2d;
+    --ring: #d4af37;
+    --chart-1: #d4af37;
+    --chart-2: #c9a876;
+    --chart-3: #9dbfd3;
+    --chart-4: #d4a5a5;
+    --chart-5: #b89560;
+    --sidebar-background: #2d2d2d;
+    --sidebar-foreground: #f5ebe0;
+    --sidebar-primary: #d4af37;
+    --sidebar-primary-foreground: #1a1a1a;
+    --sidebar-accent: #3d3d3d;
+    --sidebar-accent-foreground: #f5ebe0;
+    --sidebar-border: #4a4a4a;
+    --sidebar-ring: #d4af37;
+    --sidebar: #2d2d2d;
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
