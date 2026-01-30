@@ -4,6 +4,7 @@ import { usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
 import PdfViewer from '@/components/PdfViewer.vue';
+
 import GuestLayout from '@/layouts/GuestLayout.vue';
 import { useNavigationStore } from '@/stores/usePublicNavigationStore';
 import { FileText } from 'lucide-vue-next';
